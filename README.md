@@ -6,8 +6,11 @@ https://www.quackpad.io/pad/5617b0e4d5fa3100039634b9
 
 Members:
 Young Kim - UX
+
 Alvin Lin - Backend
+
 Jeanne Locker - Middleware
+
 Justin Pcquing - Leader
 
 Basic Design:
