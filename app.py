@@ -13,11 +13,13 @@ Bower(app)
 @app.route('/')
 def home():
   user = session['user']
-  return render_template('index.html')
+  return render_template('index.html', user=user)
 
 
 @app.route('/post', methods=['GET', 'POST'])
 def post():
+  if request.method == 'GET':
+    return redirect('/')
   return redirect('/')
 
 
@@ -62,7 +64,8 @@ def login():
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
-  del session['user']
+  if session.get('user', None):
+    del session['user']
   return redirect('/')
 
 

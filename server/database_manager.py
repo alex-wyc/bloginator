@@ -25,13 +25,13 @@ class DatabaseManager():
     c.execute("""CREATE TABLE IF NOT EXISTS posts (
               username text NOT NULL,
               content text,
-              timestamp integer NOT NULL)
+              timestamp real NOT NULL)
               """)
     c.execute("""CREATE TABLE IF NOT EXISTS comments (
               postId text NOT NULL,
               username text NOT NULL,
               content text,
-              timestamp integer NOT NULL)
+              timestamp real NOT NULL)
               """)
     connection.commit()
     connection.close()
@@ -41,13 +41,13 @@ class DatabaseManager():
   # checks have passed on the username except for uniqueness. This function
   # will return True if the registration was successful and False if there
   # already exists a user with given username.
-  def register_user(self, username, password):
+  def register_user(self, username, password, fullname):
     connection = sqlite3.connect(self.database);
     c = connection.cursor()
     result = True
     try:
-      c.execute('INSERT INTO users VALUES (?, ?)',
-                (username, Util.hash(password)))
+      c.execute('INSERT INTO users VALUES (?, ?, ?)',
+                (username, Util.hash(password), fullname))
     except sqlite3.IntegrityError:
       result = False
     connection.commit()
@@ -67,7 +67,7 @@ class DatabaseManager():
   def add_post(self, username, content):
     connection = sqlite3.connect(self.database)
     c = connection.cursor()
-    c.execute('INSERT INTO posts VALUES (?, ?, ?',
+    c.execute('INSERT INTO posts VALUES (?, ?, ?)',
               (username, content, time.time()))
     connection.commit()
     connection.close()
@@ -98,6 +98,6 @@ class DatabaseManager():
 
 if __name__ == '__main__':
   d = DatabaseManager.create()
-  print d.register_user('username', 'password')
-  print d.register_user('bob', 'de bilder')
+  print d.register_user('username', 'password', 'blah')
+  print d.register_user('bob', 'de bilder', 'blah')
   d.add_post('bob', 'yo')
