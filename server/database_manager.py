@@ -3,6 +3,7 @@
 # Author: Alvin Lin (alvin.lin@stuypulse.com)
 
 import sqlite3
+import time
 
 from util import Util
 
@@ -18,16 +19,15 @@ class DatabaseManager():
     c = connection.cursor()
     c.execute("""CREATE TABLE IF NOT EXISTS users (
               username text NOT NULL PRIMARY KEY,
-              password text NOT NULL);
+              password text NOT NULL,
+              fullname text NOT NULL);
               """)
     c.execute("""CREATE TABLE IF NOT EXISTS posts (
-              postId text NOT NULL PRIMARY KEY,
               username text NOT NULL,
               content text,
               timestamp integer NOT NULL)
               """)
     c.execute("""CREATE TABLE IF NOT EXISTS comments (
-              commentId text NOT NULL PRIMARY KEY,
               postId text NOT NULL,
               username text NOT NULL,
               content text,
@@ -53,6 +53,24 @@ class DatabaseManager():
     connection.commit()
     connection.close()
     return result
+
+  def is_user_authorized(self, username, password):
+    connection = sqlite3.connect(self.database)
+    c = connection.cursor()
+    # We can assume username is a unique field.
+    c.execute('SELECT password FROM users WHERE username=?',
+              (username,))
+    actual_password = str(c.fetchone()[0])
+    connection.close()
+    return actual_password == Util.hash(password)
+
+  def add_post(self, username, content):
+    connection = sqlite3.connect(self.database)
+    c = connection.cursor()
+    c.execute('INSERT INTO posts VALUES (?, ?, ?',
+              (username, content, time.time()))
+    connection.commit()
+    connection.close()
 
   def fetch_all_users(self):
     connection = sqlite3.connect(self.database)
@@ -82,4 +100,4 @@ if __name__ == '__main__':
   d = DatabaseManager.create()
   print d.register_user('username', 'password')
   print d.register_user('bob', 'de bilder')
-  print map(lambda x: x[0], d.fetch_all_users())
+  d.add_post('bob', 'yo')
