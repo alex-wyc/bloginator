@@ -17,3 +17,14 @@ Basic Design:
 * Choose what to Delete/Edit Page: May or may not be seperate from the Dashboard, will have some way to checkoff posts you want to either delete or edit - Edits Post Database as needed
 * Add Post Page: In essence a form page that will take input for what user wants to post - Adds to Post Database
 * Edit Post Page: Like the Add Post Page, but already has post in the form and allows user to modify post as desired - Changes Post in Post Database
+
+Done so far:
+* Sign-Up/Login Templates
+* Basic Outline of Middleware
+* Setting up SQLite dbs
+
+To-Do:
+* Homepage with varying displays for logged on/off users
+* Dashboard that displays post
+* Adding/Editting/Deleting Posts
+
