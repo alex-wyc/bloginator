@@ -1,36 +1,28 @@
 {% extends "layout.html" %}
-<html>
-  <body>
-    <div class="container">
-      <form role="form">
+{%block body%}
+  <div class="container">
+    <form role="form">
 
-        <div class="form-group">
-          Username: <br>
-          <input type="text" name="username"/> <br>
-        </div>
+      <div class="form-group">
+        Username: <br>
+        <input type="text" name="username"/> <br>
+      </div>
 
-        <div class="form-group">
-          Password: <br>
-          <input type="password" name="password"/> <br>
-        </div>
+      <div class="form-group">
+        Password: <br>
+        <input type="password" name="password"/> <br>
+      </div>
 
-        <div class="form-group">
-          Confirm Password: <br>
-          <input type="password" name="password"/> <br>
-        </div>
+      <div class="form-group">
+        Confirm Password: <br>
+        <input type="password" name="password"/> <br>
+      </div>
 
-        <div class="form-group">
-          Register: <br>
-          <input type="submit" value="submit"/> <br>
-        </div>
-
-<<<<<<< Updated upstream
-        <input type="text" name="password"/> <br>
+      <div class="form-group">
         Register: <br>
         <input type="submit" value="submit"/> <br>
-=======
->>>>>>> Stashed changes
-      </form>
-    </div>
-  </body>
-</html>
+      </div>
+
+    </form>
+  </div>
+{%endblock%}

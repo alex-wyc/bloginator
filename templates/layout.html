@@ -1,12 +1,27 @@
 <!DOCTYPE html>
   <head>
       <link rel='stylesheet' href='{{ url_for('bower.static', filename="bootstrap/dist/css/bootstrap.min.css")}}' />
+      <link rel='stylesheet' type= "text/css" href= "{{ url_for('static',filename='css/main.css') }}">
+      <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
     <title>
       bloginator
     </title>
   </head>
 
   <body>
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Bloginator</a>
+      </div>
+      <div>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">Dashboard</a></li>
+          <li><a href="signup">Signup</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
   {% block body %}
   {% endblock %}
   </body>
