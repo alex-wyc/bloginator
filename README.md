@@ -12,13 +12,12 @@ Basic Design:
 * Add Post Page: In essence a form page that will take input for what user wants to post - Adds to Post Database
 * Edit Post Page: Like the Add Post Page, but already has post in the form and allows user to modify post as desired - Changes Post in Post Database
 
-<<<<<<< HEAD
 # Creators:
   - Alvin Lin (omgimanerd)
   - Young Kim (young-k)
   - Jeanne Locker (jlox)
   - Justin Pacquing (stinographer)
-=======
+  
 Done so far:
 * Sign-Up/Login Templates
 * Basic Outline of Middleware
@@ -28,5 +27,3 @@ To-Do:
 * Homepage with varying displays for logged on/off users
 * Dashboard that displays post
 * Adding/Editting/Deleting Posts
-
->>>>>>> 63070619d50c7c20ab3f5b34754de35f1b44067e
