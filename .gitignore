@@ -2,6 +2,6 @@
 /include
 /lib
 /local
-/bower_components
+/static/bower_components
 /db
 *.pyc

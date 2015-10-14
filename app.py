@@ -7,7 +7,6 @@ from server.util import Util
 
 app = Flask(__name__)
 dbm = DatabaseManager.create()
-Bower(app)
 
 
 @app.route('/')
