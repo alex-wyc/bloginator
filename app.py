@@ -6,14 +6,15 @@ from server.database_manager import DatabaseManager
 from server.util import Util
 
 app = Flask(__name__)
-dbm = DatabaseManager()
+dbm = DatabaseManager.create()
 Bower(app)
 
 
 @app.route('/')
+@app.route('/home')
 def home():
-  user = session['user']
-  return render_template('index.html', user=user)
+  #user = session['user']
+  return render_template('index.html')
 
 
 @app.route('/post', methods=['GET', 'POST'])
@@ -34,7 +35,7 @@ def signup():
   confirm_password = request.form['confirmpassword']
 
   # Check the validity of the username.
-  if Util.checkUsername(username) and password == confirmpassword:
+  if Util.checkUsername(username) and password == confirm_password:
     # If the username was valid, attempt to register the user.
     if dbm.register_user(username, password, fullname):
       # If the registration was successful, redirect them to the
