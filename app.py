@@ -12,7 +12,9 @@ dbm = DatabaseManager.create()
 @app.route('/')
 @app.route('/home')
 def home():
-  #user = session['user']
+  if 'user' not in session:
+    session['user'] = 0
+  user = session['user']
   return render_template('index.html')
 
 
@@ -72,5 +74,6 @@ def logout():
 
 if __name__ == '__main__':
   app.debug = True
+  app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
   app.run(host='0.0.0.0', port=8080)
 
