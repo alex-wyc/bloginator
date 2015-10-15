@@ -10,6 +10,10 @@ body{
     border: 0px;
 }
 
+#main{
+  padding-top:100px;
+}
+
 .navbar-inverse .navbar-header .navbar-brand{
   color: #000000;
   font-size: 40px;

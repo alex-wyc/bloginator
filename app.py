@@ -26,12 +26,13 @@ def post():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
   if request.method == 'GET':
-    return redirect('/')
+    return render_template('signup.html')
 
   fullname = request.form['fullname']
   username = request.form['username']
   password = request.form['password']
   confirm_password = request.form['confirmpassword']
+  print request.form
 
   # Check the validity of the username.
   if Util.checkUsername(username) and password == confirm_password:
