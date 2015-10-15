@@ -14,7 +14,7 @@ def home():
   if 'user' not in session:
     session['user'] = 0
   user = session['user']
-  return render_template('index.html')
+  return render_template('index.html', user=user)
 
 
 @app.route('/post', methods=['GET', 'POST'])
