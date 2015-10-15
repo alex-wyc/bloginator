@@ -18,7 +18,7 @@ def home():
 
 @app.route('/post', methods=['GET', 'POST'])
 def post():
-  if request.method == 'GET':x
+  if request.method == 'GET':
     return redirect('/')
 
   user = session.get('user', None)
@@ -63,7 +63,7 @@ def login():
   password = request.form.get('password', '')
   if dbm.is_user_authorized(username, password):
     session['user'] = username
-    return render_template('dashboard.html', user=username)
+    return render_template('index.html', user=username)
   return render_template('index.html', message='Invalid Credentials.')
 
 
