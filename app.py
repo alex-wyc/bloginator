@@ -1,6 +1,5 @@
 from flask import Flask
 from flask import redirect, render_template, request, session
-from flask.ext.bower import Bower
 
 from server.database_manager import DatabaseManager
 from server.util import Util
