@@ -18,9 +18,9 @@ def home():
 
 @app.route('/post', methods=['GET', 'POST'])
 def post():
-  if request.method == 'GET':
+  if request.method == 'GET':x
     return redirect('/')
-  
+
   user = session.get('user', None)
   content = request.form.get('content', None)
   if user and content:
