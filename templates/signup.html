@@ -2,8 +2,14 @@
 
 {%block body%}
 
-  {{ message }}
   <div id = "main-div" class="container">
+    
+    {% if message %}
+    <h3>
+      {{message}}
+    </h3>
+    {% endif %}
+    
     <form role="form" action='/signup' method='POST'>
 
       <div class="form-group">
