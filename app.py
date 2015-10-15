@@ -11,11 +11,9 @@ dbm = DatabaseManager.create()
 @app.route('/')
 @app.route('/home')
 def home():
-  if 'user' not in session:
-    session['user'] = 0
-  user = session['user']
+  user = session.get('user', None)
   posts = dbm.fetch_all_posts();
-  return render_template('index.html', user=user, posts = posts)
+  return render_template('index.html', user=user, posts=posts)
 
 
 @app.route('/post', methods=['GET', 'POST'])
@@ -30,12 +28,13 @@ def signup():
   if request.method == 'GET':
     return render_template('signup.html')
 
-  fullname = request.form['fullname']
+  fullname = "Name"
   username = request.form['username']
   password = request.form['password']
-  confirm_password = request.form['confirmpassword']
-  print request.form
+  confirm_password = request.form['confirmPassword']
 
+  print request.form
+  
   # Check the validity of the username.
   if Util.checkUsername(username) and password == confirm_password:
     # If the username was valid, attempt to register the user.

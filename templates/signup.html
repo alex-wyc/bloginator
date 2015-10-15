@@ -1,30 +1,41 @@
 {% extends "layout.html" %}
 
-{%block body%}
+{% block body %}
 
   <div id = "main-div" class="container">
     
     {% if message %}
     <h3>
-      {{message}}
+      {{ message }}
     </h3>
     {% endif %}
     
-    <form role="form" action='/signup' method='POST'>
+    <form role="form" action="/signup" method="POST">
 
       <div class="form-group">
-        <label for="usr">Username:</label>
-        <input type="text" class="form-control" id="usr" placeholder="username"> <br>
+        <label for="inputName">Username:</label>
+        <input type="text" class="form-control"
+               id="inputName" placeholder="username"
+               name="username" />
+        <br />
       </div>
 
       <div class="form-group">
-        <label for="pwd">Password:</label>
-        <input type="password" class="form-control" id="pwd" placeholder="password"/> <br>
+        <label for="inputPass">Password:</label>
+        <input type="password"
+               class="form-control"
+               id="inputPass"
+               placeholder="password"
+               name="password" /> <br>
       </div>
 
       <div class="form-group">
-        <label for="pwd">Confirm Password:</label>
-        <input type="password" class="form-control" id="pwd" placeholder="enter password"/> <br>
+        <label for="confirmPass">Confirm Password:</label>
+        <input type="password"
+               class="form-control"
+               id="confirmPass"
+               placeholder="enter password"
+               name="confirmPassword" /> <br>
       </div>
 
       <div class="form-group">
@@ -34,4 +45,4 @@
 
     </form>
   </div>
-{%endblock%}
+{% endblock %}
