@@ -14,7 +14,8 @@ def home():
   if 'user' not in session:
     session['user'] = 0
   user = session['user']
-  return render_template('index.html', user=user)
+  posts = dbm.fetch_all_posts();
+  return render_template('index.html', user=user, posts = posts)
 
 
 @app.route('/post', methods=['GET', 'POST'])
