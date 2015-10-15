@@ -13,7 +13,7 @@ dbm = DatabaseManager.create()
 def home():
   user = session.get('user', None)
   posts = dbm.fetch_all_posts();
-  return render_template('index.html', user=user, posts=posts)
+  return render_templlate('index.html', user=user, posts=posts)
 
 
 @app.route('/post', methods=['GET', 'POST'])
@@ -70,7 +70,7 @@ def login():
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
   if session.get('user', None):
-    del session['user']
+    session['user'] = 0;
   return redirect('/')
 
 

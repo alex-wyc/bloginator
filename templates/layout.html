@@ -19,7 +19,11 @@
       <div>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="/">Dashboard</a></li>
+	  {% if user %}
+	  <li><a href="/logout">Logout</a></li>
+	  {% else %}
           <li><a href="/signup">Signup</a></li>
+	  {% endif %}
         </ul>
       </div>
     </div>
@@ -27,11 +31,12 @@
   <div id="main">
     <div class="col-md-3">
       {% if user %}
+        <h3> {{user}} </h3>
       {% else %}
         <div class = "container-fluid" id = "login">
 	  {% if message %}
 	  <h3>
-	    {{ message }}
+	    Username: {{ message }}
 	  </h3>
 	  {% else %}
 	  <h3>Login</h3>
