@@ -27,3 +27,8 @@ To-Do:
 * Homepage with varying displays for logged on/off users
 * Dashboard that displays post
 * Adding/Editting/Deleting Posts
+
+Deadlines:
+10/14
+-Finish HTML
+-Finish Post Verification
