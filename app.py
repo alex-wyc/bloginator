@@ -67,7 +67,7 @@ def login():
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
   if session.get('user', None):
-    del session['user']
+    session['user'] = 0
   return redirect('/')
 
 
