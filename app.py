@@ -20,6 +20,11 @@ def home():
 def post():
   if request.method == 'GET':
     return redirect('/')
+  
+  user = session.get('user', None)
+  content = request.form.get('content', None)
+  if user and content:
+    dbm.add_post(user, content)
   return redirect('/')
 
 
@@ -28,12 +33,10 @@ def signup():
   if request.method == 'GET':
     return render_template('signup.html')
 
-  fullname = "Name"
-  username = request.form['username']
-  password = request.form['password']
-  confirm_password = request.form['confirmPassword']
-
-  print request.form
+  fullname = request.form.get('fullname', '')
+  username = request.form.get('username', '')
+  password = request.form.get('password', '')
+  confirm_password = request.form.get('confirmPassword', '')
   
   # Check the validity of the username.
   if Util.checkUsername(username) and password == confirm_password:
@@ -45,9 +48,9 @@ def signup():
       return redirect('/')
     # If the registration was not successful, keep them here and
     # tell them the error.
-    return render_template('signup.html', message='Username taken')
+    return render_template('signup.html', message='Username taken.')
   # If their username was invalid, tell them so.
-  return render_template('signup.html', message='Invalid username')
+  return render_template('signup.html', message='Invalid username.')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -56,18 +59,18 @@ def login():
     return redirect('/')
 
   # Logs the user in if they are authorized.
-  username = request.form['username']
-  password = request.form['password']
+  username = request.form.get('username', '')
+  password = request.form.get('password', '')
   if dbm.is_user_authorized(username, password):
     session['user'] = username
     return render_template('dashboard.html', user=username)
-  return render_template('index.html', message='invalid credentials')
+  return render_template('index.html', message='Invalid Credentials.')
 
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
   if session.get('user', None):
-    session['user'] = 0
+    del session['user']
   return redirect('/')
 
 
