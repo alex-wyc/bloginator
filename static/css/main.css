@@ -12,6 +12,7 @@ body{
 
 #main{
   padding-top:100px;
+  background: linear-gradient(#B2B2FF, #FFFFFF);  
 }
 
 .navbar-inverse .navbar-header .navbar-brand{
