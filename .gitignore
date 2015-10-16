@@ -3,5 +3,5 @@
 /lib
 /local
 /static/bower_components
-/db
+/db/*.db
 *.pyc
