@@ -1,15 +1,15 @@
 {% extends 'layout.html' %}
 {%block body%}
 
-{% if user == 0 %}
+{% if not user %}
 
-<div class="container">
+<div class="col-md-9">
   <p>Hey! You're not logged in! Log in or Sign up to see the dashboard!</p>
 </div>
 
 {% else %}
 
-<div id="main-div" class="container">
+<div class="col-md-9">
   <form role="form" action='/post' method='POST'>
 
     <div class="form-group">

@@ -10,10 +10,6 @@ body{
     border: 0px;
 }
 
-#main{
-  background: linear-gradient(#B2B2FF, #FFFFFF);  
-}
-
 .navbar-inverse .navbar-header .navbar-brand{
   color: #000000;
   font-size: 40px;
