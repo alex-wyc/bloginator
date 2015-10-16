@@ -14,7 +14,13 @@
   <nav id="main-nav" class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="#">Bloginator</a>
+        <a class="navbar-brand" href="#">
+	{% if user %}
+	{{user}}'s Feed
+	{% else %}
+	Bloginator
+	{% endif %}
+        </a>
       </div>
       <div>
         <ul class="nav navbar-nav navbar-right">
@@ -31,7 +37,6 @@
   <div id="main">
     <div class="col-md-3">
       {% if user %}
-        <h3> Username: {{user}} </h3>
       {% else %}
         <div class = "container-fluid" id = "login">
 	  {% if message %}
