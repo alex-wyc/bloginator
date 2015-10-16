@@ -22,19 +22,14 @@
       <input type="submit" value="Post"/> <br>
     </div>
     
-  Currently, posts are list elements of an unordered list
-  Consisting of two parts:
-  First Part containing the User who posted and the timestamp of the Post
-  Second Part containing the post itself
-
   {% for post in posts%}
-    <br>
-     <div class="col-md-12">{{post[0]}} {{post[2]}} <br>
-    {{post[1]}}
+     <div class="col-md-12">
+      <br> 
+      {{post[0]}} {{post[2]}} <br>
+      {{post[1]}}
+      <br>
     </div>
-    <br>
   {% endfor %}
-  We can deal with the styling later, I just wanted to get a base down
 
 {% endif %}
 {%endblock%}
