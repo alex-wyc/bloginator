@@ -55,7 +55,7 @@ class DatabaseManager():
     connection.commit()
     connection.close()
     return result
-  
+
   """
   This checks if a user is authorized given their username and password.
   Returns True if and only if the given user exists and the given password
@@ -86,9 +86,28 @@ class DatabaseManager():
     connection.commit()
     connection.close()
 
+  """
+  This method updates a post given the post id and the new title and content.
+  """
   def edit_post(self, post_id, title, content):
-    pass
-    
+    connection = sqlite3.connect(self.database)
+    c = connection.cursor()
+    try:
+      c.execute("""
+                UPDATE posts SET title=?,content=?
+                WHERE rowid=?
+                """,
+                (title, content, post_id))
+      connection.commit()
+      connection.close()
+      return True
+    except:
+      connection.close()
+      return False
+
+  """
+  This method returns the data of a post given the id of the post.
+  """
   def get_post_by_id(self, post_id):
     connection = sqlite3.connect(self.database)
     c = connection.cursor()
@@ -97,7 +116,7 @@ class DatabaseManager():
     post = c.fetchone()
     connection.close()
     return post
-              
+
   """
   This method fetches all the data we have stored on registered users.
   """
