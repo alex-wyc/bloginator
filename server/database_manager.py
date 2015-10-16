@@ -3,7 +3,8 @@
 # Author: Alvin Lin (alvin.lin@stuypulse.com)
 
 import sqlite3
-import time
+#import time
+import datetime
 
 from util import Util
 
@@ -25,13 +26,13 @@ class DatabaseManager():
     c.execute("""CREATE TABLE IF NOT EXISTS posts (
               username text NOT NULL,
               content text,
-              timestamp real NOT NULL)
+              timestamp text NOT NULL)
               """)
     c.execute("""CREATE TABLE IF NOT EXISTS comments (
               postId text NOT NULL,
               username text NOT NULL,
               content text,
-              timestamp real NOT NULL)
+              timestamp text NOT NULL)
               """)
     connection.commit()
     connection.close()
@@ -81,7 +82,7 @@ class DatabaseManager():
     connection = sqlite3.connect(self.database)
     c = connection.cursor()
     c.execute('INSERT INTO posts VALUES (?, ?, ?)',
-              (username, content, time.time()))
+              (username, content, datetime.datetime.now())
     connection.commit()
     connection.close()
 
