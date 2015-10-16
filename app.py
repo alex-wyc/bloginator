@@ -20,10 +20,10 @@ def home():
 def post():
   if request.method == 'GET':
     return redirect('/')
-  
+
   user = session.get('user', None)
-  content = request.form.get('content', None)
-  if user and content:
+  content = request.form.get('content', '').strip()
+  if user and content and content != '':
     dbm.add_post(user, content)
   return redirect('/')
 
@@ -63,14 +63,14 @@ def login():
   password = request.form.get('password', '')
   if dbm.is_user_authorized(username, password):
     session['user'] = username
-    return render_template('dashboard.html', user=username)
-  return render_template('index.html', message='Invalid Credentials.')
+    return render_template('index.html', user=username)
+  return render_template('index.html', message='Invalid credentials.')
 
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
   if session.get('user', None):
-    del session['user']
+    session['user'] = 0;
   return redirect('/')
 
 

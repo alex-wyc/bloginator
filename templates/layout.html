@@ -10,23 +10,54 @@
     </title>
   </head>
 
-  <body>
+<body>
   <nav id="main-nav" class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="#">Bloginator</a>
+        <a class="navbar-brand" href="#">
+	{% if user %}
+	{{user}}'s Feed
+	{% else %}
+	Bloginator
+	{% endif %}
+        </a>
       </div>
       <div>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="/">Dashboard</a></li>
+	  {% if user %}
+	  <li><a href="/logout">Logout</a></li>
+	  {% else %}
           <li><a href="/signup">Signup</a></li>
+	  {% endif %}
         </ul>
       </div>
     </div>
   </nav>
   <div id="main">
-    {% block body %}
-    {% endblock %}
+    <div class="col-md-3">
+      {% if user %}
+      {% else %}
+        <div class = "container-fluid" id = "login">
+	  {% if message %}
+	  <h3>
+	    Username: {{ message }}
+	  </h3>
+	  {% else %}
+	  <h3>Login</h3>
+          <form role="form" action="/login" method="POST">
+	    <input type="text" name="username" placeholder="Username"> <br>
+	    <input type="password" name="password" placeholder="Password"> <br>
+	    <input type="submit" name="login" value="Login">
+          </form>
+	  {% endif %}
+        </div>
+      {% endif %}
+    </div>
+    <div class="col-md-9">
+      {% block body %}
+      {% endblock %}
+    </div>
   </div>
   </body>
 </html>
