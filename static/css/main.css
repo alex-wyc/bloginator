@@ -40,7 +40,7 @@ body{
     text-decoration: none;
 }
 
-.post{
+#post{
     border-radius: 20px;
     border: 2px solid #000099;
 }
