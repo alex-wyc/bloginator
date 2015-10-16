@@ -22,8 +22,8 @@ def post():
     return redirect('/')
 
   user = session.get('user', None)
-  content = request.form.get('content', None)
-  if user and content:
+  content = request.form.get('content', '').strip()
+  if user and content and content != '':
     dbm.add_post(user, content)
   return redirect('/')
 
@@ -64,7 +64,7 @@ def login():
   if dbm.is_user_authorized(username, password):
     session['user'] = username
     return render_template('index.html', user=username)
-  return render_template('index.html', message='Invalid Credentials.')
+  return render_template('index.html', message='Invalid credentials.')
 
 
 @app.route('/logout', methods=['GET', 'POST'])
