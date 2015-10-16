@@ -30,13 +30,19 @@ def post():
   return redirect('/')
 
 
-@app.route('/edit/<int:post_id>')
+@app.route('/edit/<int:post_id>', methods=['GET', 'POST'])
 def edit(post_id):
+  if request.method == 'GET':
+    return redirect('/')
+
+  title = request.form.get('title', '').strip()
+  content = request.form.get('content', '').strip()
+
   user = session.get('user', None)
   if user:
     post = dbm.get_post_by_id(post_id)
     if post and post[0] == user:
-      return render_template('edit.html', user=user, post=post)
+      dbm.edit_post(post_id, title, content)
   return redirect('/')
 
 

@@ -28,6 +28,13 @@
       <b>{{post[0]}}</b> | {{post[2]}} <br>
       {{post[1]}}
       </center> <br>
+      <!--
+      Make an expandable form here IF AND ONLY IF this post's user matches
+      the current user.
+      There will be one expandbale form per post if the post was made by
+      the user. The form should send a post request to /edit/{{ post[0] }}
+      with the new title and content. (fields title and content)
+      -->
     </div>
   {% endfor %}
 
