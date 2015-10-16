@@ -27,12 +27,12 @@
   Consisting of two parts:
   First Part containing the User who posted and the timestamp of the Post
   Second Part containing the post itself
-  <ul>
+  <div class="col-md-12">
   {% for post in posts%}
     <li>{{post[0]}} {{post[2]}} <br> 
     {{post[1]}} </li>
   {% endfor %}
-  </ul>
+  </div>
   We can deal with the styling later, I just wanted to get a base down
   <-->
 {% endif %}
