@@ -29,6 +29,16 @@ def post():
   return redirect('/')
 
 
+@app.route('/edit/<int:post_id>', methods=['GET', 'POST'])
+def edit(post_id):
+  if request.method == 'GET':
+    return redirect('/')
+
+  user = session.get('user', None)
+  return redirect('/')
+  
+
+
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
   if request.method == 'GET':

@@ -4,7 +4,6 @@
 
 import sqlite3
 import time
-#import datetime
 
 from util import Util
 
@@ -25,6 +24,7 @@ class DatabaseManager():
               """)
     c.execute("""CREATE TABLE IF NOT EXISTS posts (
               username text NOT NULL,
+              title text,
               content text,
               timestamp integer NOT NULL)
               """)
@@ -78,14 +78,26 @@ class DatabaseManager():
   This method adds a post into the database given the username of the person
   posting and the content of the post.
   """
-  def add_post(self, username, content):
+  def add_post(self, username, title, content):
     connection = sqlite3.connect(self.database)
     c = connection.cursor()
-    c.execute('INSERT INTO posts VALUES (?, ?, ?)',
-              (username, content, time.time()))
+    c.execute('INSERT INTO posts VALUES (?, ?, ?, ?)',
+              (username, title, content, time.time()))
     connection.commit()
     connection.close()
 
+  def edit_post(self, post_id, title, content):
+    pass
+    
+  def get_post_by_id(self, post_id):
+    connection = sqlite3.connect(self.database)
+    c = connection.cursor()
+    c.execute('SELECT * FROM posts WHERE rowid=?',
+              (post_id,))
+    post = c.fetchone()
+    connection.close()
+    return post
+              
   """
   This method fetches all the data we have stored on registered users.
   """
@@ -103,7 +115,7 @@ class DatabaseManager():
   def fetch_all_posts(self):
     connection = sqlite3.connect(self.database)
     c = connection.cursor()
-    c.execute('SELECT * FROM posts')
+    c.execute('SELECT rowid,username,content,timestamp FROM posts')
     posts = c.fetchall()
     connection.close()
     return posts
