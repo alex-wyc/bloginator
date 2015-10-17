@@ -29,6 +29,11 @@ def post():
     dbm.add_post(user, title, content)
   return redirect('/')
 
+@app.route('/myposts')
+def myposts:
+    user = session.get('user',None)
+    posts = dbm.get_posts_by_user(user)
+    return render_template('myposts.html',user=user,posts=posts)
 
 @app.route('/edit/<int:post_id>', methods=['GET', 'POST'])
 def edit(post_id):

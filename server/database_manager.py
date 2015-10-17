@@ -118,6 +118,18 @@ class DatabaseManager():
     return post
 
   """
+  This method fetches all the posts from a specific user
+  """
+  def get_posts_by_user(self, user):
+    connection = sqlite3.connect(self.database)
+    c = connection.cursor()
+    c.execute('SELECT * FROM posts WHERE username=?',
+              (user,))
+    posts = c.fetchall()
+    connection.close()
+    return posts
+  
+  """
   This method fetches all the data we have stored on registered users.
   """
   def fetch_all_users(self):
