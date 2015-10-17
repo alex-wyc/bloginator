@@ -134,7 +134,7 @@ class DatabaseManager():
   def fetch_all_posts(self):
     connection = sqlite3.connect(self.database)
     c = connection.cursor()
-    c.execute('SELECT rowid,username,content,timestamp FROM posts')
+    c.execute('SELECT username,title,content,timestamp FROM posts')
     posts = c.fetchall()
     connection.close()
     return posts

@@ -27,22 +27,17 @@
   </form>
 
   {% for post in posts %}
-     <div id="post">
-      <center>
+  <br>   
+  <div id="post">
+    <center>
       <p id="title">{{post[1]}}</p>
-      {{post[2]}} <br>
-      <p id="auttime"> {{post[0]}} | {{post[3]}} </p>
-      </center> <br>
-      <!--
-      Make an expandable form here IF AND ONLY IF this post's user matches
-      the current user.
-      There will be one expandbale form per post if the post was made by
-      the user. The form should send a post request to /edit/{{ post[0] }}
-      with the new title and content. (fields title and content)
-      -->
-    </div>
+      <p>{{post[2]}} </p>  
+      <p id="auttime"> User: {{post[0]}} | Time : {{post[3]}} </p>
+    </center> <br>
+  </div> <br>
   {% endfor %}
+  
+  {% endif %}
+  {%endblock%}
 
-{% endif %}
-{%endblock%}
-
+  
