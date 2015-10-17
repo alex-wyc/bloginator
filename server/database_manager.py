@@ -3,8 +3,7 @@
 # Author: Alvin Lin (alvin.lin@stuypulse.com)
 
 import sqlite3
-#import time
-import datetime
+import time
 
 from util import Util
 
@@ -25,14 +24,15 @@ class DatabaseManager():
               """)
     c.execute("""CREATE TABLE IF NOT EXISTS posts (
               username text NOT NULL,
+              title text,
               content text,
-              timestamp text NOT NULL)
+              timestamp integer NOT NULL)
               """)
     c.execute("""CREATE TABLE IF NOT EXISTS comments (
               postId text NOT NULL,
               username text NOT NULL,
               content text,
-              timestamp text NOT NULL)
+              timestamp integer NOT NULL)
               """)
     connection.commit()
     connection.close()
@@ -55,7 +55,7 @@ class DatabaseManager():
     connection.commit()
     connection.close()
     return result
-  
+
   """
   This checks if a user is authorized given their username and password.
   Returns True if and only if the given user exists and the given password
@@ -78,13 +78,44 @@ class DatabaseManager():
   This method adds a post into the database given the username of the person
   posting and the content of the post.
   """
-  def add_post(self, username, content):
+  def add_post(self, username, title, content):
     connection = sqlite3.connect(self.database)
     c = connection.cursor()
-    c.execute('INSERT INTO posts VALUES (?, ?, ?)',
-              (username, content, datetime.datetime.now())
+    c.execute('INSERT INTO posts VALUES (?, ?, ?, ?)',
+              (username, title, content, time.time()))
     connection.commit()
     connection.close()
+
+  """
+  This method updates a post given the post id and the new title and content.
+  """
+  def edit_post(self, post_id, title, content):
+    connection = sqlite3.connect(self.database)
+    c = connection.cursor()
+    try:
+      c.execute("""
+                UPDATE posts SET title=?,content=?
+                WHERE rowid=?
+                """,
+                (title, content, post_id))
+      connection.commit()
+      connection.close()
+      return True
+    except:
+      connection.close()
+      return False
+
+  """
+  This method returns the data of a post given the id of the post.
+  """
+  def get_post_by_id(self, post_id):
+    connection = sqlite3.connect(self.database)
+    c = connection.cursor()
+    c.execute('SELECT * FROM posts WHERE rowid=?',
+              (post_id,))
+    post = c.fetchone()
+    connection.close()
+    return post
 
   """
   This method fetches all the data we have stored on registered users.
@@ -103,7 +134,7 @@ class DatabaseManager():
   def fetch_all_posts(self):
     connection = sqlite3.connect(self.database)
     c = connection.cursor()
-    c.execute('SELECT * FROM posts')
+    c.execute('SELECT username,title,content,timestamp FROM posts')
     posts = c.fetchall()
     connection.close()
     return posts

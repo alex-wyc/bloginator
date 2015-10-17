@@ -23,9 +23,26 @@ def post():
     return redirect('/')
 
   user = session.get('user', None)
+  title = request.form.get('title', '').strip()
   content = request.form.get('content', '').strip()
-  if user and content and content != '':
-    dbm.add_post(user, content)
+  if user:
+    dbm.add_post(user, title, content)
+  return redirect('/')
+
+
+@app.route('/edit/<int:post_id>', methods=['GET', 'POST'])
+def edit(post_id):
+  if request.method == 'GET':
+    return redirect('/')
+
+  title = request.form.get('title', '').strip()
+  content = request.form.get('content', '').strip()
+
+  user = session.get('user', None)
+  if user:
+    post = dbm.get_post_by_id(post_id)
+    if post and post[0] == user:
+      dbm.edit_post(post_id, title, content)
   return redirect('/')
 
 
@@ -38,7 +55,7 @@ def signup():
   username = request.form.get('username', '')
   password = request.form.get('password', '')
   confirm_password = request.form.get('confirmPassword', '')
-  
+
   # Check the validity of the username.
   if Util.checkUsername(username) and password == confirm_password:
     # If the username was valid, attempt to register the user.
@@ -64,7 +81,7 @@ def login():
   password = request.form.get('password', '')
   if dbm.is_user_authorized(username, password):
     session['user'] = username
-    return render_template('index.html', user=username)
+    return redirect('/')
   return render_template('index.html', message='Invalid credentials.')
 
 
