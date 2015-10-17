@@ -24,8 +24,9 @@ def post():
   user = session.get('user', None)
   title = request.form.get('title', '').strip()
   content = request.form.get('content', '').strip()
+  timestamp = "This Until Jeanne changes it."
   if user:
-    dbm.add_post(user, title, content)
+    dbm.add_post(user, title, content,timestamp)
   return redirect('/')
 
 @app.route('/myposts')

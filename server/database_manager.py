@@ -26,7 +26,7 @@ class DatabaseManager():
               username text NOT NULL,
               title text,
               content text,
-              timestamp integer NOT NULL)
+              timestamp text NOT NULL)
               """)
     c.execute("""CREATE TABLE IF NOT EXISTS comments (
               postId text NOT NULL,
@@ -78,11 +78,11 @@ class DatabaseManager():
   This method adds a post into the database given the username of the person
   posting and the content of the post.
   """
-  def add_post(self, username, title, content):
+  def add_post(self, username, title, content, timestamp):
     connection = sqlite3.connect(self.database)
     c = connection.cursor()
     c.execute('INSERT INTO posts VALUES (?, ?, ?, ?)',
-              (username, title, content, time.time()))
+              (username, title, content, timestamp))
     connection.commit()
     connection.close()
 
