@@ -2,15 +2,7 @@
 
 {% block body %}																	       
 																			       
-{% if not user %}																	       
-																			       
-<div class="col-md-9">																	       
-  <p>Hey! You're not logged in! Log in or Sign up to see the dashboard!</p>										       
-</div>																			       
-																			       
-{% else %}																		       
-																			       
-<div class="col-md-9">																	       
+<div class="col-md-offset-1 col-md-10">			       
   <form class="form-horizontal" role="form" action='/post' method='POST'>										       
     <div class="form-group">																       
       <label class="control-label col-sm-2">Add a New Post!</label>											       
@@ -37,6 +29,4 @@
     </center> <br>																	       
   </div> <br>																		       
   {% endfor %}																		       
-  																			       
-  {% endif %}																		       
   {%endblock%}                                                                                                                                                 

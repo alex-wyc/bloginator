@@ -36,9 +36,9 @@
     </div>
   </nav>
   <div id="main">
-    <div class="col-md-3">
       {% if user %}
       {% else %}
+      <div class="col-md-3">
         <div class = "container-fluid" id = "login">
 	  {% if message %}
 	  <h3>
@@ -53,8 +53,8 @@
           </form>
 	  {% endif %}
         </div>
+      </div>
       {% endif %}
-    </div>
       {% block body %}
       {% endblock %}
   </div>
