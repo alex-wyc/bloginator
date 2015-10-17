@@ -81,7 +81,7 @@ def login():
   password = request.form.get('password', '')
   if dbm.is_user_authorized(username, password):
     session['user'] = username
-    return render_template('index.html', user=username)
+    return redirect('/')
   return render_template('index.html', message='Invalid credentials.')
 
 
