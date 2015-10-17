@@ -1,4 +1,3 @@
-
 from flask import Flask
 from flask import redirect, render_template, request, session
 
@@ -30,7 +29,7 @@ def post():
   return redirect('/')
 
 @app.route('/myposts')
-def myposts:
+def myposts():
     user = session.get('user',None)
     posts = dbm.get_posts_by_user(user)
     return render_template('myposts.html',user=user,posts=posts)
