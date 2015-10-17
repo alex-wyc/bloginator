@@ -123,7 +123,7 @@ class DatabaseManager():
   def get_posts_by_user(self, user):
     connection = sqlite3.connect(self.database)
     c = connection.cursor()
-    c.execute('SELECT * FROM posts WHERE username=?',
+    c.execute('SELECT rowid,username,title,content,timestamp FROM posts WHERE username=?',
               (user,))
     posts = c.fetchall()
     connection.close()
@@ -146,7 +146,7 @@ class DatabaseManager():
   def fetch_all_posts(self):
     connection = sqlite3.connect(self.database)
     c = connection.cursor()
-    c.execute('SELECT username,title,content,timestamp FROM posts')
+    c.execute('SELECT rowid,username,title,content,timestamp FROM posts')
     posts = c.fetchall()
     connection.close()
     return posts

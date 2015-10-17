@@ -22,10 +22,13 @@
   {% for post in posts %}																       
   <br>   																		       
   <div id="post" class = "container">															       
-    <center>																		       
-      <p id="title">{{post[1]}}</p>															       
-      <p>{{post[2]}} </p>  																       
-      <p id="auttime"> User: {{post[0]}} | Time : {{post[3]}} </p>											       
+    <center>
+      <form action='/edit/{{post[0]}}' method='GET'> 
+      <input type="submit" value="test">
+      </form>
+      <p id="title">{{post[2]}}</p>															       
+      <p>{{post[3]}} </p>  																       
+      <p id="auttime"> User: {{post[1]}} | Time : {{post[4]}} </p>											       
     </center> <br>																	       
   </div> <br>																		       
   {% endfor %}																		       

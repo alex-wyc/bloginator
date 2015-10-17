@@ -38,7 +38,9 @@ def myposts():
 @app.route('/edit/<int:post_id>', methods=['GET', 'POST'])
 def edit(post_id):
   if request.method == 'GET':
-    return redirect('/')
+    user = session.get('user',None)
+    posts = dbm.get_posts_by_user(user)
+    return render_template('edit.html',user = user, posts = posts,post_id = post_id)
 
   title = request.form.get('title', '').strip()
   content = request.form.get('content', '').strip()
