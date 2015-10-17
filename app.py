@@ -37,6 +37,7 @@ def myposts():
 
 @app.route('/edit/<int:post_id>', methods=['GET', 'POST'])
 def edit(post_id):
+#i think i need to pass posts to edit.html too
   if request.method == 'GET':
     return redirect('/')
 
