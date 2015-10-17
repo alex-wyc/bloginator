@@ -5,7 +5,13 @@
 
     <div class="form-group">
       <label for="comment">Edit your post!</label>
-      <textarea class="form-control" rows="10" cols="50" id="comment">/textarea>
+      <textarea class="form-control" rows="10" cols="50" id="comment">
+	{%for post in posts%}
+	{%if post_id%}
+	post[2]
+	{%endif%}
+	{%endfor%}
+      </textarea>
     </div>
 
     <div class="form-group">
