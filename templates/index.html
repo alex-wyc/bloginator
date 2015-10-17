@@ -28,9 +28,10 @@
 
   {% for post in posts %}
      <div id="post">
-      <br> <center>
-      <b>{{post[0]}}</b> | {{post[2]}} <br>
-      {{post[1]}}
+      <center>
+      <p id="title">{{post[1]}}</p>
+      {{post[2]}}
+      <p id="auttime"> {{post[0]}} | {{post[3]}} </p>
       </center> <br>
       <!--
       Make an expandable form here IF AND ONLY IF this post's user matches
