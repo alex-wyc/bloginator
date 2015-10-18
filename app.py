@@ -1,6 +1,7 @@
 import jinja2
 from flask import Flask
 from flask import redirect, render_template, request, session
+import datetime
 
 from server.database_manager import DatabaseManager
 from server.util import Util
@@ -25,7 +26,7 @@ def post():
   user = session.get('user', None)
   title = request.form.get('title', '').strip()
   content = request.form.get('content', '').strip()
-  timestamp = "This Until Jeanne changes it."
+  timestamp = datetime.datetime.now().strftime("%A, %d. %B %Y %I:%M%p")
   if user:
     dbm.add_post(user, title, content,timestamp)
   return redirect('/')
