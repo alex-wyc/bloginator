@@ -111,19 +111,21 @@ class DatabaseManager():
   def get_post_by_id(self, post_id):
     connection = sqlite3.connect(self.database)
     c = connection.cursor()
-    c.execute('SELECT rowid,username,title,content,timestamp FROM posts WHERE rowid=?',
+    c.execute("""SELECT rowid,username,title,content,timestamp
+              FROM posts WHERE rowid=?""",
               (post_id,))
     post = c.fetchone()
     connection.close()
     return post
 
   """
-  This method fetches all the posts from a specific user
+  This method fetches all the posts from a specific user.
   """
   def get_posts_by_user(self, user):
     connection = sqlite3.connect(self.database)
     c = connection.cursor()
-    c.execute('SELECT rowid,username,title,content,timestamp FROM posts WHERE username=?',
+    c.execute("""SELECT rowid,username,title,content,timestamp
+              FROM posts WHERE username=?""",
               (user,))
     posts = c.fetchall()
     connection.close()
