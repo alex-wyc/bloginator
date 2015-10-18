@@ -1,3 +1,4 @@
+import jinja2
 from flask import Flask
 from flask import redirect, render_template, request, session
 
@@ -35,12 +36,13 @@ def myposts():
     posts = dbm.get_posts_by_user(user)
     return render_template('myposts.html',user=user,posts=posts)
 
-@app.route('/edit/<int:post_id>', methods=['GET', 'POST'])
+@app.route('/edit/<post_id>', methods=['GET', 'POST'])
 def edit(post_id):
   if request.method == 'GET':
     user = session.get('user',None)
     posts = dbm.get_posts_by_user(user)
-    return render_template('edit.html',user = user, posts = posts,post_id = post_id)
+    app.jinja_env.add_extension(jinja2.ext.loopcontrols)
+    return render_template('edit.html',user = user, posts = posts,post_id = post_id[0])
 
   title = request.form.get('title', '').strip()
   content = request.form.get('content', '').strip()

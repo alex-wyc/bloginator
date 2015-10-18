@@ -1,16 +1,18 @@
 {%extends 'layout.html' %}
 {%block body%}
+<!--Test: {{post_id}} {{posts[0][0]}} -->
 <div id="main-div" class="container">
   <form role="form" action='/post' method='POST'>
-
     <div class="form-group">
       <label for="comment">Edit your post!</label>
       <textarea class="form-control" rows="10" cols="50" id="comment">
-	{%for post in posts%}
-	{%if post_id%}
+	TEST!
+	<!-- {%for post in posts%}
+	{%if post[0] == post_id%}
 	post[2]
+	{%break%}
 	{%endif%}
-	{%endfor%}
+	{%endfor%} <-->
       </textarea>
     </div>
 
