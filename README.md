@@ -1,34 +1,26 @@
 # Bloginator - Software Development Blogging Project
 
-This project is a blog website that allows users to post stories on a global
-feed. Anyone can register to post and comment on other people's posts.
+###Description of Project:
+This project is a blog website that allows users to create posts that will be displayed on a global
+feed, "Dashboard". In order to view or post to the Dashboard, users must be registered through the sign up page
+or logged in. Along with access to the globalfeed, user's have access to a personalized page called "My Posts",
+where they create posts and can view/edit their previous posts. Once users submit their edits, that post will be
+updated on the Dashboard.
 
 
-Basic Design:
-* Homepage: Allows Existing Users to sign in, or links to sign up page for new users - Checks for users in User Database
-* Sign Up Page: Allows new users to sign up, or links back to homepage - Adds new users to User Database
-* Dashboard: Shows Posts taken from the Post Database, will lead Delete/Edit/ Add pages, will give option for user to Log Out back to homepage
-* Choose what to Delete/Edit Page: May or may not be seperate from the Dashboard, will have some way to checkoff posts you want to either delete or edit - Edits Post Database as needed
-* Add Post Page: In essence a form page that will take input for what user wants to post - Adds to Post Database
-* Edit Post Page: Like the Add Post Page, but already has post in the form and allows user to modify post as desired - Changes Post in Post Database
+### Creators:
+* Young Kim - UX
+* Alvin Lin - Backend
+* Jeanne Locker - Middleware
+* Justin Pacquing - Leader
 
-# Creators:
-  - Alvin Lin (omgimanerd)
-  - Young Kim (young-k)
-  - Jeanne Locker (jlox)
-  - Justin Pacquing (stinographer)
-  
-Done so far:
-* Sign-Up/Login Templates
-* Basic Outline of Middleware
-* Setting up SQLite dbs
+### How To Use Project:
+In order to use the project, users must register and/or log in. They'll view posts on the Dashboard and create new
+or edit existing posts of their own through My Posts.
 
-To-Do:
-* Homepage with varying displays for logged on/off users
-* Dashboard that displays post
-* Adding/Editting/Deleting Posts
-
-Deadlines:
-10/14
--Finish HTML
--Finish Post Verification
+### Timeline of Deadlines:
+* 10/13 - Outline of Databases, Middleware, Sign-Up and Log-In Page Code Completed
+* 10/14 - Finish HTML of Homepage/Dashboard minus Posts
+* 10/15 - Implement Adding/Viewing Posts into Dashboard
+* 10/16 - Completion of Styling including Navigation Bar, Adding of MyPosts, Begin Work on Editting Posts
+* 10/17 - Finish Implementation of Editting Posts
