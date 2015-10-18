@@ -1,6 +1,7 @@
 import jinja2
 from flask import Flask
 from flask import redirect, render_template, request, session
+import datetime
 
 from server.database_manager import DatabaseManager
 from server.util import Util
@@ -25,7 +26,7 @@ def post():
   user = session.get('user', None)
   title = request.form.get('title', '').strip()
   content = request.form.get('content', '').strip()
-  timestamp = "This Until Jeanne changes it."
+  timestamp = datetime.datetime.now().strftime("%A, %d. %B %Y %I:%M%p")
   if user:
     dbm.add_post(user, title, content,timestamp)
   return redirect('/')
@@ -42,7 +43,7 @@ def edit(post_id):
     user = session.get('user',None)
     posts = dbm.get_posts_by_user(user)
     app.jinja_env.add_extension(jinja2.ext.loopcontrols)
-    return render_template('edit.html',user = user, posts = posts,post_id = post_id[0])
+    return render_template('edit.html',user = user, posts = posts,post_id = int(post_id))
 
   title = request.form.get('title', '').strip()
   content = request.form.get('content', '').strip()
@@ -50,7 +51,7 @@ def edit(post_id):
   user = session.get('user', None)
   if user:
     post = dbm.get_post_by_id(post_id)
-    if post and post[0] == user:
+    if post and post[1] == user:
       dbm.edit_post(post_id, title, content)
   return redirect('/')
 

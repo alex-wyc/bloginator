@@ -111,7 +111,7 @@ class DatabaseManager():
   def get_post_by_id(self, post_id):
     connection = sqlite3.connect(self.database)
     c = connection.cursor()
-    c.execute('SELECT * FROM posts WHERE rowid=?',
+    c.execute('SELECT rowid,username,title,content,timestamp FROM posts WHERE rowid=?',
               (post_id,))
     post = c.fetchone()
     connection.close()
