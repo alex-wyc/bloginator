@@ -89,15 +89,15 @@ class DatabaseManager():
   """
   This method updates a post given the post id and the new title and content.
   """
-  def edit_post(self, post_id, title, content):
+  def edit_post(self, post_id, title, content,timestamp):
     connection = sqlite3.connect(self.database)
     c = connection.cursor()
     try:
       c.execute("""
-                UPDATE posts SET title=?,content=?
+                UPDATE posts SET title=?,content=?,timestamp=?
                 WHERE rowid=?
                 """,
-                (title, content, post_id))
+                (title, content, timestamp, post_id))
       connection.commit()
       connection.close()
       return True

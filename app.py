@@ -47,12 +47,13 @@ def edit(post_id):
 
   title = request.form.get('title', '').strip()
   content = request.form.get('content', '').strip()
+  timestamp = datetime.datetime.now().strftime("%A, %d. %B %Y %I:%M%p")
 
   user = session.get('user', None)
   if user:
     post = dbm.get_post_by_id(post_id)
     if post and post[1] == user:
-      dbm.edit_post(post_id, title, content)
+      dbm.edit_post(post_id, title, content, timestamp)
   return redirect('/')
 
 
