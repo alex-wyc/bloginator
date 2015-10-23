@@ -2,7 +2,7 @@
 # data.
 # Author: Alvin Lin (alvin.lin@stuypulse.com)
 
-import sqlite3
+import pymongo import MongoClient
 import time
 
 from util import Util
@@ -44,7 +44,7 @@ class DatabaseManager():
   already exists a user with given username.
   """
   def register_user(self, username, password, fullname):
-    connection = sqlite3.connect(self.database);
+    connection = MongoClient();
     c = connection.cursor()
     result = True
     try:
@@ -146,22 +146,16 @@ class DatabaseManager():
   This method fetches all the data we have stored on user posts.
   """
   def fetch_all_posts(self):
-    connection = sqlite3.connect(self.database)
-    c = connection.cursor()
-    c.execute('SELECT rowid,username,title,content,timestamp FROM posts')
-    posts = c.fetchall()
-    connection.close()
+    connection = MongoClient()
+    posts = connection.posts.find()
     return posts
 
   """
   This method fetches all the data we have stored on user comments.
   """
   def fetch_all_comments(self):
-    connection = sqlite3.connect(self.database)
-    c = connection.cursor()
-    c.execute('SELECT * FROM comments')
-    comments = c.fetchall()
-    connection.close()
+    connection = MongoClient()
+    comments = connection.comments.find()
     return comments
 
 if __name__ == '__main__':
