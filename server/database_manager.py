@@ -150,7 +150,7 @@ class DatabaseManager():
   """
   This method fetches all the data we have stored on user comments.
   """
-  def fetch_all_comments(self):
+  def fetch_all_comments():
     connection = MongoClient()
     comments = connection.comments.find()
     return comments
