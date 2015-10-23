@@ -2,7 +2,7 @@
 # data.
 # Author: Alvin Lin (alvin.lin@stuypulse.com)
 
-import sqlite3
+import pymongo import MongoClient
 import time
 
 from util import Util
@@ -43,17 +43,14 @@ class DatabaseManager():
   will return True if the registration was successful and False if there
   already exists a user with given username.
   """
-  def register_user(self, username, password, fullname):
-    connection = sqlite3.connect(self.database);
-    c = connection.cursor()
+  def register_user(username, password, fullname):
+    connection = MongoClient();
     result = True
     try:
       c.execute('INSERT INTO users VALUES (?, ?, ?)',
                 (username, Util.hash(password), fullname))
     except sqlite3.IntegrityError:
       result = False
-    connection.commit()
-    connection.close()
     return result
 
   """
@@ -145,23 +142,17 @@ class DatabaseManager():
   """
   This method fetches all the data we have stored on user posts.
   """
-  def fetch_all_posts(self):
-    connection = sqlite3.connect(self.database)
-    c = connection.cursor()
-    c.execute('SELECT rowid,username,title,content,timestamp FROM posts')
-    posts = c.fetchall()
-    connection.close()
+  def fetch_all_posts():
+    connection = MongoClient()
+    posts = connection.posts.find()
     return posts
 
   """
   This method fetches all the data we have stored on user comments.
   """
-  def fetch_all_comments(self):
-    connection = sqlite3.connect(self.database)
-    c = connection.cursor()
-    c.execute('SELECT * FROM comments')
-    comments = c.fetchall()
-    connection.close()
+  def fetch_all_comments():
+    connection = MongoClient()
+    comments = connection.comments.find()
     return comments
 
 if __name__ == '__main__':
