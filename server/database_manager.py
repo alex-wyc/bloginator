@@ -43,17 +43,14 @@ class DatabaseManager():
   will return True if the registration was successful and False if there
   already exists a user with given username.
   """
-  def register_user(self, username, password, fullname):
+  def register_user(username, password, fullname):
     connection = MongoClient();
-    c = connection.cursor()
     result = True
     try:
       c.execute('INSERT INTO users VALUES (?, ?, ?)',
                 (username, Util.hash(password), fullname))
     except sqlite3.IntegrityError:
       result = False
-    connection.commit()
-    connection.close()
     return result
 
   """
@@ -145,7 +142,7 @@ class DatabaseManager():
   """
   This method fetches all the data we have stored on user posts.
   """
-  def fetch_all_posts(self):
+  def fetch_all_posts():
     connection = MongoClient()
     posts = connection.posts.find()
     return posts
