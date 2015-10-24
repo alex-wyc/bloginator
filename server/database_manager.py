@@ -2,12 +2,14 @@
 # data.
 # Author: Alvin Lin (alvin.lin@stuypulse.com)
 
-import pymongo import MongoClient
+from pymongo import MongoClient
 import time
 
 from util import Util
 
-DATABASE = 'db/bloginator.db'
+connection = MongoClient()
+
+db = connection['bloginator']
 
 class DatabaseManager():
   def __init__(self, database):
@@ -86,21 +88,16 @@ class DatabaseManager():
   """
   This method updates a post given the post id and the new title and content.
   """
-  def edit_post(self, post_id, title, content,timestamp):
-    connection = sqlite3.connect(self.database)
-    c = connection.cursor()
-    try:
-      c.execute("""
-                UPDATE posts SET title=?,content=?,timestamp=?
-                WHERE rowid=?
-                """,
-                (title, content, timestamp, post_id))
-      connection.commit()
-      connection.close()
-      return True
-    except:
-      connection.close()
-      return False
+
+   def edit_post(post_id, title, content, timestamp):
+     db.posts.update(
+       {"postId": post_id}, 
+       {"$set": {
+         "title": title, 
+         "content": content, 
+         "timestamp": timestamp}}
+     )
+
 
   """
   This method returns the data of a post given the id of the post.
@@ -141,11 +138,21 @@ class DatabaseManager():
 
   """
   This method fetches all the data we have stored on user posts.
+  Returns a list
   """
-  def fetch_all_posts():
-    connection = MongoClient()
-    posts = connection.posts.find()
-    return posts
+ def fetch_all_posts():
+   posts = db.posts.find().sort([("timestamp", 1)])
+   l = []
+   p = []
+   for post in posts:
+     p = [ post["postId"],
+           post["username"],
+           post["title"],
+           post["content"],
+           post["timestamp"]]
+     l.append(p)
+     return l
+
 
   """
   This method fetches all the data we have stored on user comments.
