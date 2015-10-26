@@ -11,34 +11,6 @@ connection = MongoClient()
 
 db = connection['bloginator']
 
-class DatabaseManager():
-  def __init__(self, database):
-    self.database = database
-
-  @staticmethod
-  def create():
-    connection = sqlite3.connect(DATABASE);
-    c = connection.cursor()
-    c.execute("""CREATE TABLE IF NOT EXISTS users (
-              username text NOT NULL PRIMARY KEY,
-              password text NOT NULL,
-              fullname text NOT NULL);
-              """)
-    c.execute("""CREATE TABLE IF NOT EXISTS posts (
-              username text NOT NULL,
-              title text,
-              content text,
-              timestamp text NOT NULL)
-              """)
-    c.execute("""CREATE TABLE IF NOT EXISTS comments (
-              postId text NOT NULL,
-              username text NOT NULL,
-              content text,
-              timestamp integer NOT NULL)
-              """)
-    connection.commit()
-    connection.close()
-    return DatabaseManager(DATABASE)
   """
   This registers a user and adds them to the database assuming all validity
   checks have passed on the username except for uniqueness. This function
