@@ -28,7 +28,7 @@ def register_user(username, password, fullname):
 This method returns the data of a post given the id of the post.
 """
 def get_post_by_id(post_id):
-  p = db.posts.find({'postId':post_id})
+  p = list(db.posts.find({'postId':post_id}))
   return p
 
 
@@ -44,10 +44,6 @@ if __name__ == '__main__':
   db.users.drop()
   print db.collection_names()
 
-  res = db.users.find()
-  for r in res:
-    print r
-
-  print register_user("Bob","butt","Bobby Flay")
-  print register_user("Felicity","Nig","Felly Ng")
-  print db.users.find()
+  postit={'postId':0,'username':"Felicity",'title':"Butt",'content':"Bleh. aousdbgrjlglsdfuiglisgftuisfhio",'timestamp':000000}
+  db.posts.insert(postit)
+  print get_post_by_id(0)
