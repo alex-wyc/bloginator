@@ -35,8 +35,8 @@ def get_post_by_id(post_id):
 """
 This method fetches all the data we have stored on user comments.
 """
-def fetch_all_comments():
-  comments = db.comments.find()
+def fetch_all_comments(postId):
+  comments = list(db.comments.find({'postId':postId}))
   return comments
 
 
