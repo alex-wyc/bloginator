@@ -18,14 +18,15 @@ db = connection['bloginator']
   already exists a user with given username.
   """
   def register_user(username, password, fullname):
-    connection = MongoClient();
+  us = list(db.users.find({'username':username}))
+  print us
+  if us == []:
+    t = {'username':username, 'password':password, 'fullname':fullname}
+    db.users.insert(t)
     result = True
-    try:
-      c.execute('INSERT INTO users VALUES (?, ?, ?)',
-                (username, Util.hash(password), fullname))
-    except sqlite3.IntegrityError:
-      result = False
-    return result
+  else:
+    result = False
+  return result
 
   """
   This checks if a user is authorized given their username and password.
@@ -74,15 +75,9 @@ db = connection['bloginator']
   """
   This method returns the data of a post given the id of the post.
   """
-  def get_post_by_id(self, post_id):
-    connection = sqlite3.connect(self.database)
-    c = connection.cursor()
-    c.execute("""SELECT rowid,username,title,content,timestamp
-              FROM posts WHERE rowid=?""",
-              (post_id,))
-    post = c.fetchone()
-    connection.close()
-    return post
+  def get_post_by_id(post_id):
+    p = list(db.posts.find({'postId':post_id}))
+    return p
 
   """
   This method fetches all the posts from a specific user.
@@ -127,11 +122,10 @@ db = connection['bloginator']
 
 
   """
-  This method fetches all the data we have stored on user comments.
+  This method fetches all the data we have stored on user comments with a specific postId.
   """
-  def fetch_all_comments():
-    connection = MongoClient()
-    comments = connection.comments.find()
+  def fetch_all_comments(postId):
+    comments = list(db.comments.find({'postId':postId}))
     return comments
 
 if __name__ == '__main__':
