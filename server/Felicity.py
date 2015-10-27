@@ -14,7 +14,7 @@ will return True if the registration was successful and False if there
 already exists a user with given username.
 """
 def register_user(username, password, fullname):
-  us = list(db.users.find({'username':username}).limit(2))
+  us = list(db.users.find({'username':username}))
   print us
   if us == []:
     t = {'username':username, 'password':password, 'fullname':fullname}
@@ -28,13 +28,8 @@ def register_user(username, password, fullname):
 This method returns the data of a post given the id of the post.
 """
 def get_post_by_id(post_id):
-  connection = sqlite3.connect(self.database)
-  c = connection.cursor()
-  c.execute("""SELECT rowid,username,title,content,timestamp
-  FROM posts WHERE rowid=?""",
-            (post_id,))
-  post = c.fetchone()
-  return post
+  p = db.posts.find({'postId':post_id})
+  return p
 
 
 """
@@ -48,13 +43,11 @@ def fetch_all_comments():
 if __name__ == '__main__':
   db.users.drop()
   print db.collection_names()
-  
 
   res = db.users.find()
   for r in res:
     print r
 
-        
   print register_user("Bob","butt","Bobby Flay")
   print register_user("Felicity","Nig","Felly Ng")
   print db.users.find()
