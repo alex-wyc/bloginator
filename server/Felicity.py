@@ -14,11 +14,12 @@ will return True if the registration was successful and False if there
 already exists a user with given username.
 """
 def register_user(username, password, fullname):
-  result = True
-  us = db.users.find({'username':username})
-  if us is None:
+  us = list(db.users.find({'username':username}).limit(2))
+  print us
+  if us == []:
     t = {'username':username, 'password':password, 'fullname':fullname}
     db.users.insert(t)
+    result = True
   else:
     result = False
   return result
@@ -45,7 +46,15 @@ def fetch_all_comments():
 
 
 if __name__ == '__main__':
+  db.users.drop()
   print db.collection_names()
-  db.user.insert({"username": "Bob"})
-  print db.collection_names()
+  
+
+  res = db.users.find()
+  for r in res:
+    print r
+
+        
   print register_user("Bob","butt","Bobby Flay")
+  print register_user("Felicity","Nig","Felly Ng")
+  print db.users.find()
