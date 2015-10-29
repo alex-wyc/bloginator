@@ -2,59 +2,31 @@
 # data.
 # Author: Alvin Lin (alvin.lin@stuypulse.com)
 
-import sqlite3
+from pymongo import MongoClient
 import time
 
 from util import Util
 
-DATABASE = 'db/bloginator.db'
+connection = MongoClient()
 
-class DatabaseManager():
-  def __init__(self, database):
-    self.database = database
+db = connection['bloginator']
 
-  @staticmethod
-  def create():
-    connection = sqlite3.connect(DATABASE);
-    c = connection.cursor()
-    c.execute("""CREATE TABLE IF NOT EXISTS users (
-              username text NOT NULL PRIMARY KEY,
-              password text NOT NULL,
-              fullname text NOT NULL);
-              """)
-    c.execute("""CREATE TABLE IF NOT EXISTS posts (
-              username text NOT NULL,
-              title text,
-              content text,
-              timestamp text NOT NULL)
-              """)
-    c.execute("""CREATE TABLE IF NOT EXISTS comments (
-              postId text NOT NULL,
-              username text NOT NULL,
-              content text,
-              timestamp integer NOT NULL)
-              """)
-    connection.commit()
-    connection.close()
-    return DatabaseManager(DATABASE)
   """
   This registers a user and adds them to the database assuming all validity
   checks have passed on the username except for uniqueness. This function
   will return True if the registration was successful and False if there
   already exists a user with given username.
   """
-  def register_user(self, username, password, fullname):
-    connection = sqlite3.connect(self.database);
-    c = connection.cursor()
+  def register_user(username, password, fullname):
+  us = list(db.users.find({'username':username}))
+  print us
+  if us == []:
+    t = {'username':username, 'password':password, 'fullname':fullname}
+    db.users.insert(t)
     result = True
-    try:
-      c.execute('INSERT INTO users VALUES (?, ?, ?)',
-                (username, Util.hash(password), fullname))
-    except sqlite3.IntegrityError:
-      result = False
-    connection.commit()
-    connection.close()
-    return result
+  else:
+    result = False
+  return result
 
   """
   This checks if a user is authorized given their username and password.
@@ -89,34 +61,23 @@ class DatabaseManager():
   """
   This method updates a post given the post id and the new title and content.
   """
-  def edit_post(self, post_id, title, content,timestamp):
-    connection = sqlite3.connect(self.database)
-    c = connection.cursor()
-    try:
-      c.execute("""
-                UPDATE posts SET title=?,content=?,timestamp=?
-                WHERE rowid=?
-                """,
-                (title, content, timestamp, post_id))
-      connection.commit()
-      connection.close()
-      return True
-    except:
-      connection.close()
-      return False
+
+   def edit_post(post_id, title, content, timestamp):
+     db.posts.update(
+       {"postId": post_id}, 
+       {"$set": {
+         "title": title, 
+         "content": content, 
+         "timestamp": timestamp}}
+     )
+
 
   """
   This method returns the data of a post given the id of the post.
   """
-  def get_post_by_id(self, post_id):
-    connection = sqlite3.connect(self.database)
-    c = connection.cursor()
-    c.execute("""SELECT rowid,username,title,content,timestamp
-              FROM posts WHERE rowid=?""",
-              (post_id,))
-    post = c.fetchone()
-    connection.close()
-    return post
+  def get_post_by_id(post_id):
+    p = list(db.posts.find({'postId':post_id}))
+    return p
 
   """
   This method fetches all the posts from a specific user.
@@ -144,24 +105,27 @@ class DatabaseManager():
 
   """
   This method fetches all the data we have stored on user posts.
+  Returns a list
   """
-  def fetch_all_posts(self):
-    connection = sqlite3.connect(self.database)
-    c = connection.cursor()
-    c.execute('SELECT rowid,username,title,content,timestamp FROM posts')
-    posts = c.fetchall()
-    connection.close()
-    return posts
+ def fetch_all_posts():
+   posts = db.posts.find().sort([("timestamp", 1)])
+   l = []
+   p = []
+   for post in posts:
+     p = [ post["postId"],
+           post["username"],
+           post["title"],
+           post["content"],
+           post["timestamp"]]
+     l.append(p)
+     return l
+
 
   """
-  This method fetches all the data we have stored on user comments.
+  This method fetches all the data we have stored on user comments with a specific postId.
   """
-  def fetch_all_comments(self):
-    connection = sqlite3.connect(self.database)
-    c = connection.cursor()
-    c.execute('SELECT * FROM comments')
-    comments = c.fetchall()
-    connection.close()
+  def fetch_all_comments(postId):
+    comments = list(db.comments.find({'postId':postId}))
     return comments
 
 if __name__ == '__main__':

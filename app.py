@@ -3,6 +3,8 @@ from flask import Flask
 from flask import redirect, render_template, request, session
 import datetime
 
+from pymongo import MongoClient
+#need to remove sql thing
 from server.database_manager import DatabaseManager
 from server.util import Util
 
