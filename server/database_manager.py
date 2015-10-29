@@ -35,9 +35,9 @@ def fetch_all_users():
     return list(users)
 
 
-def edit_post(post_id, title, content, timestamp):
+def edit_post(oldtitle, title, content, timestamp):
     db.posts.update(
-        {"postId": post_id}, 
+        {"title": oldtitle}, 
         {"$set": {
             "title": title, 
             "content": content, 
