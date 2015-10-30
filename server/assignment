@@ -1,8 +1,4 @@
 12 functions
-Sally
-create
-edit_post
-fetch_all_posts
 
 Felicity
 register_user
@@ -12,9 +8,5 @@ fetch_all_comments
 Michael
 is_user_authorized
 get_posts_by_user
-hash (in util.py)
 
-Yicheng
-add_post
-fetch_all_users
-checkUsername(in util.py)
+
