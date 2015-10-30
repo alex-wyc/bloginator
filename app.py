@@ -5,18 +5,17 @@ import datetime
 
 from pymongo import MongoClient
 #need to remove sql thing
-from server.database_manager import DatabaseManager
+from server.database_manager import *
 from server.util import Util
 
 app = Flask(__name__)
-dbm = DatabaseManager.create()
 
 
 @app.route('/')
 @app.route('/home')
 def home():
   user = session.get('user', None)
-  posts = dbm.fetch_all_posts();
+  posts = fetch_all_posts();
   return render_template('index.html', user=user, posts=posts)
 
 
@@ -30,20 +29,20 @@ def post():
   content = request.form.get('content', '').strip()
   timestamp = datetime.datetime.now().strftime("%A, %d. %B %Y %I:%M%p")
   if user:
-    dbm.add_post(user, title, content,timestamp)
+    add_post(user, title, content,timestamp)
   return redirect('/')
 
 @app.route('/myposts')
 def myposts():
     user = session.get('user',None)
-    posts = dbm.get_posts_by_user(user)
+    posts = get_posts_by_user(user)
     return render_template('myposts.html',user=user,posts=posts)
 
 @app.route('/edit/<post_id>', methods=['GET', 'POST'])
 def edit(post_id):
   if request.method == 'GET':
     user = session.get('user',None)
-    posts = dbm.get_posts_by_user(user)
+    posts = get_posts_by_user(user)
     app.jinja_env.add_extension(jinja2.ext.loopcontrols)
     return render_template('edit.html',user = user, posts = posts,post_id = int(post_id))
 
@@ -53,9 +52,9 @@ def edit(post_id):
 
   user = session.get('user', None)
   if user:
-    post = dbm.get_post_by_id(post_id)
+    post = get_post_by_id(post_id)
     if post and post[1] == user:
-      dbm.edit_post(post_id, title, content, timestamp)
+      edit_post(post_id, title, content, timestamp)
   return redirect('/')
 
 
@@ -72,7 +71,7 @@ def signup():
   # Check the validity of the username.
   if Util.checkUsername(username) and password == confirm_password:
     # If the username was valid, attempt to register the user.
-    if dbm.register_user(username, password, fullname):
+    if register_user(username, password, fullname):
       # If the registration was successful, redirect them to the
       # homepage.
       session['user'] = username
@@ -92,7 +91,7 @@ def login():
   # Logs the user in if they are authorized.
   username = request.form.get('username', '')
   password = request.form.get('password', '')
-  if dbm.is_user_authorized(username, password):
+  if is_user_authorized(username, password):
     session['user'] = username
     return redirect('/')
   return render_template('index.html', message='Invalid credentials.')
