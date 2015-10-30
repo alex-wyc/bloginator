@@ -20,7 +20,7 @@ db = connection['bloginator']
 COLLECTIONS 
 users: username, password, fullname
 posts: username, title, content, timestamp
-comments: postId, username, content, timestamp
+comments: postTitle, postAuthor, username, content, timestamp
 """
 
 """
@@ -57,8 +57,7 @@ def fetch_all_posts():
     l = []
     p = []
     for post in posts:
-        p = [ post["postId"],
-              post["username"],
+        p = [ post["username"],
               post["title"],
               post["content"],
               post["timestamp"]]
@@ -83,18 +82,20 @@ def register_user(username, password, fullname):
   return result
 
 """
-This method returns the data of a post given the id of the post.
+This method returns the data of a post given the title and author os the post
 """
-def get_post_by_id(post_id):
-  p = list(db.posts.find({'postId':post_id}))
-  return p
+def get_post_by_title_and_author(post_title, post_author):
+    p = list(db.posts.find({'username':post_author, 'title':post_title}))
+    return p
 
 
 """
-This method fetches all the data we have stored on user comments.
+This method fetches all the data we have stored on user comments given a
+postTitle and post.
 """
-def fetch_all_comments(postId):
-  comments = list(db.comments.find({'postId':postId}))
-  return comments
+def fetch_all_comments(postTitle, postAuthor):
+    comments = list(db.comments.find({'postTitle':postTitle, 'postAuthor':
+        postAuthor}))
+    return comments
 
 
