@@ -2,6 +2,15 @@ from pymongo import MongoClient
 import time
 
 from util import Util
+import hashlib
+import re
+
+def hash(text):
+    return hashlib.sha256(text).hexdigest()
+
+def checkUsername(username):
+    return not re.search('[^a-zA-Z0-9]', username) and len(username) > 0
+
 
 connection = MongoClient()
 
@@ -34,7 +43,6 @@ def fetch_all_users():
     users = db.users.find()
     return list(users)
 
-
 def edit_post(oldtitle, title, content, timestamp):
     db.posts.update(
         {"title": oldtitle}, 
@@ -56,4 +64,37 @@ def fetch_all_posts():
               post["timestamp"]]
         l.append(p)
     return l
+
+"""
+This registers a user and adds them to the database assuming all validity
+checks have passed on the username except for uniqueness. This function
+will return True if the registration was successful and False if there
+already exists a user with given username.
+"""
+def register_user(username, password, fullname):
+  us = list(db.users.find({'username':username}))
+  print us
+  if us == []:
+    t = {'username':username, 'password':password, 'fullname':fullname}
+    db.users.insert(t)
+    result = True
+  else:
+    result = False
+  return result
+
+"""
+This method returns the data of a post given the id of the post.
+"""
+def get_post_by_id(post_id):
+  p = list(db.posts.find({'postId':post_id}))
+  return p
+
+
+"""
+This method fetches all the data we have stored on user comments.
+"""
+def fetch_all_comments(postId):
+  comments = list(db.comments.find({'postId':postId}))
+  return comments
+
 
