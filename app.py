@@ -6,7 +6,6 @@ import datetime
 from pymongo import MongoClient
 #need to remove sql thing
 from server.database_manager import *
-from server.util import Util
 
 app = Flask(__name__)
 
