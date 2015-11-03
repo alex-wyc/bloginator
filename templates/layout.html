@@ -20,11 +20,12 @@
 	        <li><a href="/">Dashboard</a></li>
 	      </ul>
 	      <ul class="nav navbar-nav navbar-right">
-	        {% if "username" not in s %}
+	        {% if user %}
+	        <li><a href="/logout">Logout</a></li>
+	        {% else %}
 	        <li><a href="/signup">Sign Up</a></li>
             <li><a href="/login">Log In</a></li>
-	        {% else %}
-	        <li><a href="/logout">Logout</a></li>
+
 	        {% endif %}
 	      </ul>
       </div>
