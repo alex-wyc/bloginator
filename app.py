@@ -1,6 +1,7 @@
 import jinja2
 from flask import Flask
 from flask import redirect, render_template, request, session
+from functools import wraps
 import datetime
 
 from pymongo import MongoClient
@@ -9,6 +10,15 @@ from server.database_manager import *
 
 app = Flask(__name__)
 
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if "username" not in session:
+            return redirect("/login")
+        return f(*args, **kwargs)
+    return decorated_function
+  
 
 @app.route('/')
 @app.route('/home')
@@ -21,6 +31,7 @@ def home():
 
 
 @app.route('/post', methods=['GET', 'POST'])
+@login_required
 def post():
   if request.method == 'GET':
     return redirect('/')
@@ -34,12 +45,14 @@ def post():
   return redirect('/')
 
 @app.route('/myposts')
+@login_required
 def myposts():
     user = session.get('user',None)
     posts = get_posts_by_user(user)
     return render_template('myposts.html',user=user,posts=posts)
 
 @app.route('/edit/<post_id>', methods=['GET', 'POST'])
+@login_required
 def edit(post_id):
   if request.method == 'GET':
     user = session.get('user',None)
@@ -103,6 +116,7 @@ def login():
 
 
 @app.route('/logout', methods=['GET', 'POST'])
+@login_required
 def logout():
   if session.get('user', None):
     session['user'] = 0;
