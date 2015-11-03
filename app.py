@@ -68,7 +68,7 @@ def signup():
   confirm_password = request.form.get('confirmPassword', '')
 
   # Check the validity of the username.
-  if Util.checkUsername(username) and password == confirm_password:
+  if checkUsername(username) and password == confirm_password:
     # If the username was valid, attempt to register the user.
     if register_user(username, password, fullname):
       # If the registration was successful, redirect them to the
