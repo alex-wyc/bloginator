@@ -14,7 +14,7 @@ app = Flask(__name__)
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if "username" not in session:
+        if "user" not in session:
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
@@ -48,7 +48,7 @@ def post():
 @login_required
 def myposts():
     user = session.get('user',None)
-    posts = get_posts_by_user(user)
+    posts = get_posts_by_author(user)
     return render_template('myposts.html',user=user,posts=posts)
 
 @app.route('/edit/<post_id>', methods=['GET', 'POST'])
