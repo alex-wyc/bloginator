@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='{{ url_for("static",
+          filename="css/bootstrap.min.css") }}' />
+    <link rel='stylesheet' href='{{ url_for("static",
+          filename="css/main.css") }}' />
+    <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+    <title>bloginator</title>
+  </head>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+	      <a class="navbar-brand" href="/">
+	        Bloginator
+	      </a>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <ul class="nav navbar-nav">
+	        <li><a href="/">Dashboard</a></li>
+	      </ul>
+	      <ul class="nav navbar-nav navbar-right">
+	        <li><a href="/signup">Sign Up</a></li>
+
+
+          <div class="col-md-9">
+            
+            {% if message %}
+            <h3>{{ message }}</h3>
+            {% endif %}
+            
+            <form role="form" action="/login" method="POST">
+                            
+              <div class="form-group">
+                <label for="inputName">Username:</label>
+                <input type="text" class="form-control"
+                       id="inputName" placeholder="username"
+                       name="username" />
+                <br />
+              </div>
+              
+              <div class="form-group">
+                <label for="inputPass">Password:</label>
+                <input type="password"
+                       class="form-control"
+                       id="inputPass"
+                       placeholder="password"
+                       name="password" /> <br>
+              </div>
+
+              <div class="form-group">
+                <input type="submit" value="Login"/> <br>
+              </div>
+
+            </form>
+          </div>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</html>

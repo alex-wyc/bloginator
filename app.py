@@ -14,7 +14,9 @@ app = Flask(__name__)
 @app.route('/home')
 def home():
   user = session.get('user', None)
-  posts = fetch_all_posts();
+  posts = fetch_all_posts()
+  print user
+  print posts
   return render_template('index.html', user=user, posts=posts)
 
 
@@ -82,10 +84,14 @@ def signup():
   return render_template('signup.html', message='Invalid username.')
 
 
+@app.route('/login')
+def login_page():
+    return render_template('login.html')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
   if request.method == 'GET':
-    return redirect('/')
+    return render_template('login.html')
 
   # Logs the user in if they are authorized.
   username = request.form.get('username', '')

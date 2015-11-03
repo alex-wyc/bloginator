@@ -1,8 +1,7 @@
 {% extends 'layout.html' %}
 {% block body %}
 
-{% if not user %}	
-{% else %}
+{% if user %}	
 
 {% for post in posts | reverse %}
 <div class = "middleBody">
