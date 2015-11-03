@@ -125,7 +125,7 @@ associated with that user
 '''
 def is_user_authorized(username, password):
     us = list(db.users.find({'username':username, 'password':password}))
-    if us = []:
+    if us == []:
         return False
     else:
         return True
