@@ -14,7 +14,7 @@ app = Flask(__name__)
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if "user" not in session:
+        if "user" not in session or session["user"] == 0:
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
