@@ -16,7 +16,7 @@ connection = MongoClient()
 db = connection['bloginator']
 
 """
-COLLECTIONS 
+COLLECTIONS
 users: username, password, fullname
 posts: username, title, content, timestamp
 comments: postTitle, postAuthor, username, content, timestamp
@@ -52,14 +52,14 @@ def edit_post(oldtitle, author, title, content, timestamp): # tested
             return False
 
     a = db.posts.update(
-        {"title": oldtitle, "username":author}, 
+        {"title": oldtitle, "username":author},
         {"$set": {
-            "title": title, 
-            "content": content, 
+            "title": title,
+            "content": content,
             "timestamp": timestamp}}
     )
     return a['updatedExisting']
- 
+
 def fetch_all_posts(): # tested
     return list(db.posts.find().sort([("timestamp", 1)]))
 
@@ -111,6 +111,13 @@ def add_comment(postTitle, postAuthor, author, comment, timestamp): #tested
                'timestamp': timestamp}
     db.comments.insert(comment)
     return True
+
+'''
+this function returns all posts by a user
+'''
+def get_posts_by_author(post_author):
+    p = list(db.posts.find({'username':post_author))
+    return p
 
 if __name__ == "__main__":
     db.drop_collection('users')
