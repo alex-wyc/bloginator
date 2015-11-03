@@ -116,8 +116,19 @@ def add_comment(postTitle, postAuthor, author, comment, timestamp): #tested
 this function returns all posts by a user
 '''
 def get_posts_by_author(post_author):
-    p = list(db.posts.find({'username':post_author))
+    p = list(db.posts.find({'username':post_author}))
     return p
+
+'''
+this function returns true if the user exists and the password matches the password
+associated with that user
+'''
+def is_user_authorized(username, password):
+    us = list(db.users.find({'username':username, 'password':password}))
+    if us = []:
+        return False
+    else:
+        return True
 
 if __name__ == "__main__":
     db.drop_collection('users')
