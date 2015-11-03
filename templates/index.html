@@ -1,19 +1,20 @@
-{% extends 'layout.html' %}
+{% extends "layout.html" %}
 {% block body %}
 
-{% if user %}	
+<h1>Hi {{ user }}</h1>
 
 {% for post in posts | reverse %}
 <div class = "middleBody">
   <br>   								       
   <div id="post" class = "container">					       
     <center>					       
-      <p id="title">{{post[2]}}</p>					       
-      <p>{{post[3]}} </p> 						       
-      <p id="auttime"> User: {{post[1]}} | Last Updated : {{post[4]}} </p>
+      <p id="title">{{post['title']}}</p>
+      <p>{{post['content']}} </p> 						       
+      <p id="auttime"> User: {{post['username']}} | Last Updated :
+      {{post['timestamp']}} </p>
     </center> <br>							       
   </div> <br>
 </div>
 {% endfor %}
-{% endif %}
+
 {% endblock %}
