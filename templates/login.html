@@ -29,18 +29,10 @@
             <h3>{{ message }}</h3>
             {% endif %}
             
-            <form role="form" action="/signup" method="POST">
-              
+            <form role="form" action="/login" method="POST">
+                            
               <div class="form-group">
-                <label for="inputFullName">Full Name:</label>
-                <input type="text" class="form-control"
-                       id="inputFullName" placeholder="fullname"
-                       name="fullname" />
-                <br/>
-              </div>
-              
-              <div class="form-group">
-                <label for="inputName">Username (Only numbers and letters!):</label>
+                <label for="inputName">Username:</label>
                 <input type="text" class="form-control"
                        id="inputName" placeholder="username"
                        name="username" />
@@ -57,17 +49,7 @@
               </div>
 
               <div class="form-group">
-                <label for="confirmPass">Confirm Password:</label>
-                <input type="password"
-                       class="form-control"
-                       id="confirmPass"
-                       placeholder="enter password"
-                       name="confirmPassword" /> <br>
-              </div>
-
-              <div class="form-group">
-                Register: <br>
-                <input type="submit" value="submit"/> <br>
+                <input type="submit" value="Login"/> <br>
               </div>
 
             </form>
