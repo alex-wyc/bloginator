@@ -55,7 +55,8 @@ def myposts():
 @login_required
 def edit(post_id):
     if request.method == 'GET':
-        return render_template('edit.html', post_id=post_id, post=get_post_by_id(post_id))
+        user = session.get('user',None)
+        return render_template('edit.html', post_id=post_id, post=get_post_by_id(post_id), user = user)
     
     title = request.form.get('title', '').strip()
     content = request.form.get('content', '').strip()

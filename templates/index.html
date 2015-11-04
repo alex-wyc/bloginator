@@ -1,7 +1,9 @@
 {% extends "layout.html" %}
 {% block body %}
 
+{% if user %}
 <h1>Hi {{ user }}</h1>
+{% endif %}
 
 {% for post in posts | reverse %}
 <div class = "middleBody">
