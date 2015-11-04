@@ -103,7 +103,7 @@ def get_post_by_id(post_id):
     retVal = list(db.posts.find({'post_id': post_id}))
     if retVal == []:
         return None
-    print retVal[0]
+    #print retVal[0]
     return retVal[0]
 
 """

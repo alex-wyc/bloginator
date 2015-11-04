@@ -25,8 +25,8 @@ def login_required(f):
 def home():
     user = session.get('user', None)
     posts = fetch_all_posts()
-    print user
-    print posts
+    #print user
+    #print posts
     return render_template('index.html', user=user, posts=posts)
 
 
@@ -64,10 +64,10 @@ def edit(post_id):
     user = session.get('user', None)
     if user:
         post = get_post_by_id(post_id)
-        print "post: " + str(post)
+        #print "post: " + str(post)
         if post and post['username'] == user:
             a = edit_post(post_id, title, content, timestamp)
-            print "a : " + str(a)
+            #print "a : " + str(a)
     return redirect('/')
 
 
