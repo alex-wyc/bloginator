@@ -10,7 +10,6 @@ def hash(text):
 def checkUsername(username):
     return not re.search('[^a-zA-Z0-9]', username) and len(username) > 0
 
-
 connection = MongoClient()
 
 db = connection['bloginator']
@@ -23,6 +22,19 @@ comments: postTitle, postAuthor, username, content, timestamp
 """
 
 """
+Returns an avaliable post id, really duct-taped
+"""
+# XXX improve this!
+
+def get_post_id():
+    i = 0
+    a = list(db.posts.find({'post_id':i}))
+    while (a != []):
+        i += 1
+        a = list(db.posts.find({'post_id':i}))
+    return i
+
+"""
 This method adds a post into the database given the username of the person
 posting and the content of the post.
 """
@@ -32,7 +44,8 @@ def add_post(username, title, content, timestamp): # tested
         post = {"username" : username,
                 "title" :  title,
                 "content" : content,
-                "timestamp" : timestamp}
+                "timestamp" : timestamp,
+                "post_id": get_post_id()}
         db.posts.insert(post)
         return True
     else:
@@ -45,19 +58,14 @@ def fetch_all_users(): # tested
     users = db.users.find()
     return list(users)
 
-def edit_post(oldtitle, author, title, content, timestamp): # tested
-    posts = fetch_all_posts()
-    for post in posts:
-        if post['username'] == author and post['title'] == title:
-            return False
-
+def edit_post(post_id, title, content, timestamp): # tested
     a = db.posts.update(
-        {"title": oldtitle, "username":author},
-        {"$set": {
-            "title": title,
-            "content": content,
-            "timestamp": timestamp}}
-    )
+            {"post_id" : post_id},
+            {"$set": {
+                "title": title,
+                "content": content,
+                "timestamp": timestamp}}
+            )
     return a['updatedExisting']
 
 def fetch_all_posts(): # tested
@@ -69,15 +77,16 @@ checks have passed on the username except for uniqueness. This function
 will return True if the registration was successful and False if there
 already exists a user with given username.
 """
+
 def register_user(username, password, fullname): # tested
-  us = list(db.users.find({'username':username}))
-  if us == []:
-    t = {'username':username, 'password':password, 'fullname':fullname}
-    db.users.insert(t)
-    result = True
-  else:
-    result = False
-  return result
+    us = list(db.users.find({'username':username}))
+    if us == []:
+        t = {'username':username, 'password':password, 'fullname':fullname}
+        db.users.insert(t)
+        result = True
+    else:
+        result = False
+    return result
 
 """
 This method returns the data of a post given the title and author os the post
@@ -86,6 +95,16 @@ def get_post_by_title_and_author(post_title, post_author):
     p = list(db.posts.find({'username':post_author, 'title':post_title}))
     return p
 
+"""
+This method returns the data of a post given the post_id
+"""
+
+def get_post_by_id(post_id):
+    retVal = list(db.posts.find({'post_id': post_id}))
+    if retVal == []:
+        return None
+    print retVal[0]
+    return retVal[0]
 
 """
 This method fetches all the data we have stored on user comments given a
@@ -105,10 +124,10 @@ def add_comment(postTitle, postAuthor, author, comment, timestamp): #tested
     if ps == []:
         return False;
     comment = {'postTitle': postTitle,
-               'postAuthor': postAuthor,
-               'username': author,
-               'content': comment,
-               'timestamp': timestamp}
+            'postAuthor': postAuthor,
+            'username': author,
+            'content': comment,
+            'timestamp': timestamp}
     db.comments.insert(comment)
     return True
 
@@ -140,12 +159,4 @@ if __name__ == "__main__":
     print add_post("hiWorld", 'test1', "this is a test", 15)
     print add_post("hiWorld", 'test1', "this is a test", 15)
     print add_post("alex-wyc", 'test1', 'this is a test', 6)
-    print fetch_all_posts()
-    print edit_post("test1", "alex-wyc", "test2", "this is another test", 10)
-    print edit_post("test5", "hiWorld", 'test5', 'this should not show up', 10)
-    print edit_post("test2", "alex-wyc", 'test2', 'this should not show up either', 20)
-    print fetch_all_posts()
-    print get_post_by_title_and_author("test2", "alex-wyc")
-    print add_comment('test2', 'alex-wyc', 'hiWorld', 'this is a comment', 10)
-    print fetch_all_comments('test2', 'alex-wyc')
-    print fetch_all_comments('test3', 'dne')
+    print fetch_all_posts()   

@@ -5,15 +5,15 @@
 
 {% for post in posts | reverse %}
 <div class = "middleBody">
-  <br>   								       
-  <div id="post" class = "container">					       
-    <center>					       
-      <p id="title">{{post['title']}}</p>
-      <p>{{post['content']}} </p> 						       
-      <p id="auttime"> User: {{post['username']}} | Last Updated :
-      {{post['timestamp']}} </p>
-    </center> <br>							       
-  </div> <br>
+    <br>   								       
+    <div id="post" class = "container">					       
+        <center>					       
+            <p id="title">{{post['title']}}</p>
+            <p>{{post['content']}} </p> 						       
+            <p id="auttime"> User: {{post['username']}} | Last Updated :
+            {{post['timestamp']}} </p>
+        </center> <br>							       
+    </div> <br>
 </div>
 {% endfor %}
 
